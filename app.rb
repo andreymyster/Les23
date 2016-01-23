@@ -3,10 +3,11 @@ require 'sinatra'
 require 'sinatra/reloader'
 
 get '/' do
-  erb 'Hello motherfucker! Это работает!'
+  erb :index
 end
 
 get '/about' do
+  @error = "Что-то пошло не так!"
   erb :about
 end
 
@@ -23,9 +24,18 @@ post '/visit' do
   @phone = params[:phone]
   @datetime = params[:datetime]
   @barber = params[:barber]
+  @color = params[:color]
+
+  hh = { :username => 'Введите имя', :phone => 'Введите телефон', :datetime => 'введите дату и время' }
+  hh.each do |key, value|
+    if params[key] == ''
+      @error = hh[key]
+      return erb :visit
+    end
+  end
 
   f = File.open './public/users.txt', 'a'
-  f.write "Barber: #{@barber}. Name: #{@username}, phone: #{@phone}, date and time: #{@datetime}\n"
+  f.write "Barber: #{@barber}. Name: #{@username}, phone: #{@phone}, date and time: #{@datetime}, color: #{@color}\n"
   f.close
 
   erb "Спасибо за запись"

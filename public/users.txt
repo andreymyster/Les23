@@ -1,3 +1,10 @@
 Name: Андрей, phone: 3723236, date and time: 17-00 29 мая
 Name: Дима, phone: 2433223, date and time: 13-00
 Barber: Jassie Pinkman. Name: Ander, phone: 23424, date and time: 
+Barber: Walter White. Name: , phone: , date and time: , color: 
+Barber: Walter White. Name: , phone: , date and time: , color: 
+Barber: Walter White. Name: hgvhg, phone: , date and time: , color: 
+Barber: Walter White. Name: Ivan, phone: 234234, date and time: , color: 
+Barber: Walter White. Name: 2342, phone: 3453, date and time: , color: 
+Barber: Walter White. Name: 2322, phone: 232, date and time: , color: 
+Barber: Walter White. Name: erwr, phone: 23442, date and time: 2342, color: 
