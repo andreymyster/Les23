@@ -27,11 +27,9 @@ post '/visit' do
   @color = params[:color]
 
   hh = { :username => 'Введите имя', :phone => 'Введите телефон', :datetime => 'введите дату и время' }
-  hh.each do |key, value|
-    if params[key] == ''
-      @error = hh[key]
-      return erb :visit
-    end
+  @error = hh.select { |key,_| params[key] == ''}.values.join(', ')
+  if @error != ''
+    return erb :visit
   end
 
   f = File.open './public/users.txt', 'a'
