@@ -1,6 +1,31 @@
 require 'rubygems'
 require 'sinatra'
 require 'sinatra/reloader'
+require 'pony'
+
+def set_error hh
+  @error = hh.select { |key,_| params[key] == ''}.values.join(', ')
+end
+
+def send_mail
+#  Pony.mail(:to => 'and001@gmail.com',  :from => "#{@mail}", :subject => "Barbershop client message from #{@mail}", :body => "#{@usermessage}")
+  Pony.mail (:name => 'Barbershop',
+    :mail => @mail,
+    :body => @usermessage,
+    :to => 'and001@gmail.com',
+    :subject => 'Barbershop client message from ' + @mail,
+    :port => '587',
+    :via => :smtp,
+    :via_options => {
+      :address              => 'smtp.gmail.com',
+      :port                 => '587',
+      :enable_starttls_auto => true,
+      :user_name            => 'myster555',
+      :password             => 'vapun1111',
+      :authentication       => :plain,
+      :domain               => 'localhost.localdomain'
+    })
+end
 
 get '/' do
   erb :index
@@ -27,7 +52,7 @@ post '/visit' do
   @color = params[:color]
 
   hh = { :username => 'Введите имя', :phone => 'Введите телефон', :datetime => 'введите дату и время' }
-  @error = hh.select { |key,_| params[key] == ''}.values.join(', ')
+  set_error hh
   if @error != ''
     return erb :visit
   end
@@ -43,9 +68,17 @@ post '/contacts' do
   @email = params[:email]
   @usermessage = params[:usermessage]
 
+  hh = { :email => 'Введите адрес', :usermessage => 'Введите сообщение' }
+  set_error hh
+  if @error != ''
+    return erb :contacts
+  end
+
   f = File.open './public/contacts.txt', 'a'
   f.write "E-mail: #{@email}. Message: #{@usermessage}\n"
   f.close
+
+  send_mail
 
   erb "Спасибо. Сообщение отправлено."
 end
