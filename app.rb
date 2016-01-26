@@ -1,7 +1,24 @@
 require 'rubygems'
 require 'sinatra'
 require 'sinatra/reloader'
-require 'pony'
+require 'sqlite3'
+
+
+configure do
+  enable :sessions
+  @db = SQLite3::Database.new 'barbershop.db'
+  @db.execute 'CREATE TABLE IF NOT EXISTS
+    "Users"
+    (
+      "Id" INTEGER PRIMARY KEY AUTOINCREMENT,
+      "Name" VARCHAR,
+      "Phone" VARCHAR,
+      "Datestamp" VARCHAR,
+      "Barber" VARCHAR,
+      "Color" VARCHAR
+    )'
+end
+
 
 def set_error hh
   @error = hh.select { |key,_| params[key] == ''}.values.join(', ')
@@ -65,9 +82,6 @@ end
 # ЛОГИН
 #-------------------------
 
-configure do
-  enable :sessions
-end
 
 helpers do
   def username
