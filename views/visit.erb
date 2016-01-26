@@ -7,9 +7,9 @@
   <div class="form-group">
     <label>Выберите парикмахера </label>
     <select name="barber" class="form-control">
-      <option>Walter White</option>
-      <option>Jassie Pinkman</option>
-      <option>Gus Fring</option>
+      <option <%=@barber == 'Walter White' ? 'selected' : '' %>>Walter White</option>
+      <option <%=@barber == 'Jassie Pinkman' ? 'selected' : '' %>>Jassie Pinkman</option>
+      <option <%=@barber == 'Gus Fring' ? 'selected' : '' %>>Gus Fring</option>
     </select>
   </div>
 
