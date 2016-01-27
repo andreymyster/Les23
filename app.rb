@@ -43,13 +43,7 @@ get '/contacts' do
 end
 
 get '/users' do
-  @table = "<tr><th>Id</th><th>Name</th><th>Phone</th><th>DateStamp</th><th>Barber</th><th>Color</th></tr>"
-
-  $db.execute 'SELECT * from Users' do |hh|
-    @table += "<tr><td>"
-    @table += hh.join('</td><td>')
-    @table += "</td></tr>"
-  end
+  @results = $db.execute 'SELECT * from Users order by Id desc'
   erb :users
 end
 

@@ -1,6 +1,18 @@
 <table class="table">
-  <caption>Таблица записей пользователей</caption>
-  <%=@table%>
-</table>
 
-<%=@aaa%>
+  <tr>
+    <th>Id</th>
+    <th>Name</th>
+    <th>Phone</th>
+    <th>DateStamp</th>
+    <th>Barber</th>
+    <th>Color</th>
+  </tr>
+
+  <% @results.each do |hh| %>
+    <tr>
+      <td> <%=hh.join('</td><td>')%> </td>
+    </tr>
+  <% end %>
+
+</table>
