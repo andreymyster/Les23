@@ -7,9 +7,9 @@ require 'sqlite3'
 configure do
   enable :sessions
 
-  # $db = get_db
-  db = SQLite3::Database.new 'barbershop.db'
-  db.execute 'CREATE TABLE IF NOT EXISTS
+  $db = SQLite3::Database.new 'barbershop.db'
+  # $db.results_as_hash = true
+  $db.execute 'CREATE TABLE IF NOT EXISTS
     "Users"
     (
       "Id" INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -19,13 +19,7 @@ configure do
       "Barber" VARCHAR,
       "Color" VARCHAR
     )'
-  db.close
 end
-
-# def get_db
-#   return SQLite3::Database.new 'barbershop.db'
-# end
-
 
 def set_error hh
   @error = hh.select { |key,_| params[key] == ''}.values.join(', ')
@@ -48,6 +42,17 @@ get '/contacts' do
   erb :contacts
 end
 
+get '/users' do
+  @table = "<tr><th>Id</th><th>Name</th><th>Phone</th><th>DateStamp</th><th>Barber</th><th>Color</th></tr>"
+
+  $db.execute 'SELECT * from Users' do |hh|
+    @table += "<tr><td>"
+    @table += hh.join('</td><td>')
+    @table += "</td></tr>"
+  end
+  erb :users
+end
+
 post '/visit' do
   @username = params[:username]
   @phone = params[:phone]
@@ -61,10 +66,8 @@ post '/visit' do
     return erb :visit
   end
 
-  db = SQLite3::Database.new 'barbershop.db'
-  db.execute 'insert into Users (name, phone, Datestamp, barber, color)
+  $db.execute 'insert into Users (name, phone, Datestamp, barber, color)
     values (?,?,?,?,?)', [@username, @phone, @datetime, @barber, @color]
-  db.close
 
   erb "Спасибо за запись"
 end
