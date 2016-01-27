@@ -1,18 +1,19 @@
-<table class="table">
-
-  <tr>
-    <th>Id</th>
-    <th>Name</th>
-    <th>Phone</th>
-    <th>DateStamp</th>
-    <th>Barber</th>
-    <th>Color</th>
-  </tr>
-
-  <% @results.each do |hh| %>
+<table class="table table-striped">
+  <thead>
     <tr>
-      <td> <%=hh.join('</td><td>')%> </td>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Phone</th>
+      <th>DateStamp</th>
+      <th>Barber</th>
+      <th>Color</th>
     </tr>
-  <% end %>
-
+  </thead>
+  <tbody>
+    <% @results.each do |hh| %>
+      <tr>
+        <td> <%=hh.join('</td><td>')%> </td>
+      </tr>
+    <% end %>
+  </tsbody>
 </table>

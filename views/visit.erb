@@ -7,9 +7,9 @@
   <div class="form-group">
     <label>Выберите парикмахера </label>
     <select name="barber" class="form-control">
-      <option <%=@barber == 'Walter White' ? 'selected' : '' %>>Walter White</option>
-      <option <%=@barber == 'Jassie Pinkman' ? 'selected' : '' %>>Jassie Pinkman</option>
-      <option <%=@barber == 'Gus Fring' ? 'selected' : '' %>>Gus Fring</option>
+      <% @barbers.each do |barber| %>
+        <option <%=@barber == barber ? 'selected' : '' %>><%=barber[0]%></option>
+      <% end %>
     </select>
   </div>
 
