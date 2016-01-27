@@ -49,18 +49,20 @@ def set_error hh
   @error = hh.select { |key,_| params[key] == ''}.values.join(', ')
 end
 
+before do
+  db = get_db
+  @barbers = db.execute 'SELECT Name from Barbers'
+end
+
 get '/' do
   erb :index
 end
 
 get '/about' do
-  @error = "Что-то пошло не так!"
   erb :about
 end
 
 get '/visit' do
-  db = get_db
-  @barbers = db.execute 'SELECT Name from Barbers'
   erb :visit
 end
 

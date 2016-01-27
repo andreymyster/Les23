@@ -7,8 +7,8 @@
   <div class="form-group">
     <label>Выберите парикмахера </label>
     <select name="barber" class="form-control">
-      <% @barbers.each do |barber| %>
-        <option <%=@barber == barber ? 'selected' : '' %>><%=barber[0]%></option>
+      <% @barbers.each do |item| %>
+        <option <%=@barber == item[0] ? 'selected' : '' %>><%=item[0]%></option>
       <% end %>
     </select>
   </div>
