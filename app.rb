@@ -6,8 +6,10 @@ require 'sqlite3'
 
 configure do
   enable :sessions
-  @db = SQLite3::Database.new 'barbershop.db'
-  @db.execute 'CREATE TABLE IF NOT EXISTS
+
+  # $db = get_db
+  db = SQLite3::Database.new 'barbershop.db'
+  db.execute 'CREATE TABLE IF NOT EXISTS
     "Users"
     (
       "Id" INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -17,7 +19,12 @@ configure do
       "Barber" VARCHAR,
       "Color" VARCHAR
     )'
+  db.close
 end
+
+# def get_db
+#   return SQLite3::Database.new 'barbershop.db'
+# end
 
 
 def set_error hh
@@ -54,9 +61,10 @@ post '/visit' do
     return erb :visit
   end
 
-  f = File.open './public/users.txt', 'a'
-  f.write "Barber: #{@barber}. Name: #{@username}, phone: #{@phone}, date and time: #{@datetime}, color: #{@color}\n"
-  f.close
+  db = SQLite3::Database.new 'barbershop.db'
+  db.execute 'insert into Users (name, phone, Datestamp, barber, color)
+    values (?,?,?,?,?)', [@username, @phone, @datetime, @barber, @color]
+  db.close
 
   erb "Спасибо за запись"
 end
